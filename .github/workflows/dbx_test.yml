@@ -23,6 +23,9 @@ jobs:
         pip install databricks-cli
 
     - name: List Files on DBFS
+      env:
+          DATABRICKS_HOST: ${{ secrets.DBX_H }}
+          DATABRICKS_TOKEN: ${{ secrets.DBX }}
       run: |
-        databricks configure --token "${{ secrets.DBX }}" --host "${{ secrets.DBX_H }}" 
         databricks fs ls dbfs:/tmp/
+    
