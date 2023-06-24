@@ -36,5 +36,5 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DBX }}
       run: |
         databricks fs ls dbfs:/tmp/
-        databricks cp --recursive ./test.py dbfs:/tmp/
+        databricks fs cp --recursive ./test.py dbfs:/tmp/
     
