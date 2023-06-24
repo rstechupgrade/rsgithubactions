@@ -24,9 +24,10 @@ jobs:
         
     - name: List files in cwd
       run: |
-        ls -ltrh
-        vi test.py
-        ls -ltrh
+        cat > ./test.py << EOF
+        This is a test file
+        EOF
+        ls 
         pwd
 
     - name: List Files on DBFS
