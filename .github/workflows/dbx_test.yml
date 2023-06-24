@@ -1,0 +1,28 @@
+name: Databricks Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  list-files-on-databricks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Databricks CLI
+      run: |
+        pip install databricks-cli
+
+    - name: List Files on DBFS
+      run: |
+        databricks configure --token "${{ secrets.DBX }}"
+        databricks fs ls dbfs:/tmp/
