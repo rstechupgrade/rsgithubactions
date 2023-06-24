@@ -24,5 +24,5 @@ jobs:
 
     - name: List Files on DBFS
       run: |
-        databricks configure --token "${{ secrets.DBX }}"
+        databricks configure --token "${{ secrets.DBX }}" --host "${{ secrets.DBX_H }}" 
         databricks fs ls dbfs:/tmp/
