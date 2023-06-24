@@ -27,6 +27,7 @@ jobs:
         ls -ltrh
         vi test.py
         ls -ltrh
+        pwd
 
     - name: List Files on DBFS
       env:
@@ -34,4 +35,5 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DBX }}
       run: |
         databricks fs ls dbfs:/tmp/
+        databricks cp --recursive ./test.py dbfs:/tmp/
     
