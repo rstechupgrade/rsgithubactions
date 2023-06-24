@@ -21,6 +21,12 @@ jobs:
     - name: Install Databricks CLI
       run: |
         pip install databricks-cli
+        
+    - name: List files in cwd
+      run: |
+        ls -ltrh
+        vi test.py
+        ls -ltrh
 
     - name: List Files on DBFS
       env:
