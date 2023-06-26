@@ -25,7 +25,7 @@ jobs:
         
     - name: List files in cwd
       run: |
-        cat > ./test.py << EOF
+        cat > ./test1.py << EOF
         This is a test file
         EOF
         ls 
@@ -35,7 +35,6 @@ jobs:
           SPN_CLIENT_ID: ${{ secrets.SPN_CLI }}
           SPN_CLIENT_SECRET: ${{ secrets.SPN_CLIS }}
       run: |
-        databricks configure --token "$SPN_CLIENT_SECRET"
         databricks fs ls dbfs:/tmp/
         databricks fs cp --recursive ./test.py dbfs:/tmp/
     
