@@ -20,12 +20,22 @@ jobs:
       with:
         python-version: '3.x'
         
-    - name: Authenticate and get access token
-      id: login
-      uses: azure/login@v1
-      with:
-          creds: '{"clientId":"${{ secrets.SPN_CLI }}","clientSecret":"${{ secrets.CLIS }}","subscriptionId":"${{ secrets.SUB }}","tenantId":"${{ secrets.TENA_I }}"}'
-          allow-no-subscriptions: true
+    - name: Set up Azure CLI
+      run: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+    - name: Authenticate with Azure
+      run: |
+        az login --service-principal --username ${{ secrets.SPN_CLI }} --password ${{ secrets.CLIS }} --tenant ${{ secrets.TENA_I }}
+
+    - name: Generate Access Token
+      id: access_token
+      run: |
+        access_token=$(az account get-access-token --resource=${{ secrets.DBX_H }} --query 'accessToken' -o tsv)
+
+    - name: Log out from Azure
+      run: az logout
+        
     - name: Install Databricks CLI
       run: |
         pip install databricks-cli
@@ -40,12 +50,12 @@ jobs:
     - name: List Files on DBFS
       env:
           DATABRICKS_HOST: ${{ secrets.DBX_H }}
-          DATABRICKS_TOKEN: ${{ steps.login.outputs.ACCESS_TOKEN }}
+          DATABRICKS_TOKEN: ${{ steps.access_token.outputs.access_token }}
       run: |
         databricks fs ls dbfs:/tmp/
         databricks fs cp --recursive ./test1.py dbfs:/tmp/
         
-        
+          
         
         
     
