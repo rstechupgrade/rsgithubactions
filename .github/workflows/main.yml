@@ -22,10 +22,12 @@ jobs:
         
     - name: Authenticate and get access token
       id: login
-      uses: Azure/actions/login@V1
+      uses: azure/login@v1
       with:
-        creds: '{"clientId":"${{ secrets.SPN_CLI }}","clientSecret":"${{ secrets.SPN_CLIS }}","tenantId":"${{ secrets.TENA_I }}"}'
-
+          client-id: ${{ secrets.SPN_CLI }}
+          tenant-id: ${{ secrets.TENA_I  }}
+          subscription-id: ${{ secrets.SUB }}
+          
     - name: Install Databricks CLI
       run: |
         pip install databricks-cli
