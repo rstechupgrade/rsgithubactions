@@ -27,12 +27,12 @@ jobs:
     - name: Log in with Azure
       uses: azure/login@v1
       with:
-        creds: '${{ secrets.AZC_2 }}'
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
         
     - name: Generate Access Token
       id: access_token
       run: |
-        access_token=$(az account get-access-token --resource=${{ secrets.DBX_H2 }} --query 'accessToken' -o tsv)
+        access_token=$(az account get-access-token --resource=${{ secrets.DBX_H }} --query 'accessToken' -o tsv)
 
     - name: Log out from Azure
       run: az logout
@@ -50,7 +50,7 @@ jobs:
         pwd
     - name: List Files on DBFS
       env:
-          DATABRICKS_HOST: ${{ secrets.DBX_H3 }}
+          DATABRICKS_HOST: ${{ secrets.DBX_H }}
           DATABRICKS_TOKEN: ${{ steps.access_token.outputs.access_token }}
       run: |
         databricks fs ls dbfs:/tmp/
