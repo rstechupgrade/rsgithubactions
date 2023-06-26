@@ -1,0 +1,41 @@
+
+name: Databricks Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  list-files-on-databricks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install Databricks CLI
+      run: |
+        pip install databricks-cli
+        
+    - name: List files in cwd
+      run: |
+        cat > ./test.py << EOF
+        This is a test file
+        EOF
+        ls 
+        pwd
+    - name: List Files on DBFS
+      env:
+          SPN_CLIENT_ID: ${{ secrets.SPN_CLI }}
+          SPN_CLIENT_SECRET: ${{ secrets.SPN_CLIS }}
+      run: |
+        databricks configure --token "$SPN_CLIENT_SECRET"
+        databricks fs ls dbfs:/tmp/
+        databricks fs cp --recursive ./test.py dbfs:/tmp/
+    
