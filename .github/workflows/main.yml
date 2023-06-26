@@ -18,6 +18,13 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
+        
+    - name: Authenticate and get access token
+      id: login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.SPN_CLIS }}
+        args: --service-principal --tenant ${{ secrets.TENA_I }} --client-id ${{ secrets.SPN_CLI }}
 
     - name: Install Databricks CLI
       run: |
@@ -32,9 +39,13 @@ jobs:
         pwd
     - name: List Files on DBFS
       env:
-          SPN_CLIENT_ID: ${{ secrets.SPN_CLI }}
-          SPN_CLIENT_SECRET: ${{ secrets.SPN_CLIS }}
+          DATABRICKS_HOST: ${{ secrets.DBX_H }}
+          DATABRICKS_TOKEN: ${{ steps.login.outputs.ACCESS_TOKEN }}
       run: |
         databricks fs ls dbfs:/tmp/
-        databricks fs cp --recursive ./test.py dbfs:/tmp/
+        databricks fs cp --recursive ./test1.py dbfs:/tmp/
+        
+        
+        
+        
     
