@@ -22,7 +22,7 @@ jobs:
         
     - name: Authenticate and get access token
       id: login
-      uses: azure/login@v1
+      uses: Azure/actions/login@V1
       with:
         creds: '{"clientId":"${{ secrets.SPN_CLI }}","clientSecret":"${{ secrets.SPN_CLIS }}","tenantId":"${{ secrets.TENA_I }}"}'
 
