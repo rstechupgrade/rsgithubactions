@@ -31,7 +31,7 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.SPN_CLIS }}
-        args: --service-principal --tenant ${{ secrets.TENA_I }} --client-id ${{ secrets.SPN_CLI }}
+        args: --service-principal --tenant-id ${{ secrets.TENA_I }} --client-id ${{ secrets.SPN_CLI }}
 
     - name: Install Databricks CLI
       run: |
