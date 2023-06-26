@@ -24,10 +24,11 @@ jobs:
       run: |
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-    - name: Authenticate with Azure
-      run: |
-        az login --service-principal -u ${{ secrets.SPN_CLI }} -p ${{ secrets.CLIS }} --tenant ${{ secrets.TENA_I }}
-
+    - name: Log in with Azure
+      uses: azure/login@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        
     - name: Generate Access Token
       id: access_token
       run: |
