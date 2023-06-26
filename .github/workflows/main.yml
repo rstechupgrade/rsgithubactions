@@ -24,10 +24,8 @@ jobs:
       id: login
       uses: azure/login@v1
       with:
-          client-id: ${{ secrets.SPN_CLI }}
-          tenant-id: ${{ secrets.TENA_I  }}
-          subscription-id: ${{ secrets.SUB }}
-          
+          creds: '{"clientId":"${{ secrets.SPN_CLI }}","clientSecret":"${{ secrets.CLIS }}","subscriptionId":"${{ secrets.SUB }}","tenantId":"${{ secrets.TENA_I }}"}'
+          allow-no-subscriptions: true
     - name: Install Databricks CLI
       run: |
         pip install databricks-cli
