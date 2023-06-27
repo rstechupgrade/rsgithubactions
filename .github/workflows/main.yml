@@ -53,6 +53,7 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DBX_H }}
           DATABRICKS_TOKEN: ${{ steps.access_token.outputs.access_token }}
       run: |
+        databricks configure --token
         databricks fs ls dbfs:/tmp/
         databricks fs cp --recursive ./test1.py dbfs:/tmp/
         
