@@ -33,7 +33,8 @@ jobs:
       id: access_token
       run: |
         access_token=$(az account get-access-token --resource=${{ secrets.SPN_RESOURCE }} --query 'accessToken' -o tsv)
-
+        echo ${{ secrets.DBX_H }}
+        echo $access_token
     - name: Log out from Azure
       run: az logout
         
