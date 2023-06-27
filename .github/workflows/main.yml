@@ -51,7 +51,7 @@ jobs:
         pwd
     - name: List Files on DBFS
       env:
-          DATABRICKS_HOST: ${{ secrets.DBX_H }}
+          DATABRICKS_HOST: 'https://adb-4345429593595912.12.azuredatabricks.net/'
           DATABRICKS_TOKEN: ${{ steps.access_token.outputs.access_token }}
       run: |
         databricks configure --token && databricks configure set host "$DATABRICKS_HOST" && databricks configure set token "$DATABRICKS_TOKEN"
