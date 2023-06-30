@@ -57,7 +57,7 @@ jobs:
           DATABRICKS_TOKEN: ${{ steps.access_token.outputs.access_token }}
       run: |
         echo ${{ steps.access_token.outputs.access_token }} > token-file
-        databricks configure --host ${{ secrets.DBX_H }} --token-file token-file
+        dbfs configure --host ${{ secrets.DBX_H }} --token-file token-file
         rm -f token-file
         echo 'configured!'
         databricks fs ls dbfs:/tmp/
