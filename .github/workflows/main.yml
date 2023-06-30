@@ -60,10 +60,7 @@ jobs:
         databricks configure --host ${{ secrets.DBX_H }} --token-file token-file
         rm -f token-file
         echo 'configured!'
-        echo $DATABRICKS_HOST
-        echo $DATABRICKS_TOKEN
-        databricks fs ls dbfs:/tmp/
-        databricks fs cp --recursive ./test1.py dbfs:/tmp/
+        
         
           
         
