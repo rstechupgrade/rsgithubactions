@@ -46,6 +46,9 @@ jobs:
         cat > ./test1.py << EOF
         This is a test file
         EOF
+        echo "[DEFAULT]                                                               
+        host = ${{ secrets.DBX_H }}
+        token = ${{ steps.access_token.outputs.access_token }}" > ~/.databricks.cfg
         ls 
         pwd
     - name: List Files on DBFS
@@ -53,7 +56,10 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DBX_H }}
           DATABRICKS_TOKEN: ${{ steps.access_token.outputs.access_token }}
       run: |
-        databricks configure ${{ secrets.DBX_H }} --host --token ${{ steps.access_token.outputs.access_token }}
+        echo ${{ steps.access_token.outputs.access_token }} > token-file
+        databricks configure --host ${{ secrets.DBX_H }} --token-file token-file
+        rm -f token-file
+        echo 'configured!'
         echo $DATABRICKS_HOST
         echo $DATABRICKS_TOKEN
         databricks fs ls dbfs:/tmp/
