@@ -43,13 +43,16 @@ jobs:
         
     - name: List files in cwd
       run: |
+        echo 'before'
+        ls
         cat > ./test1.py << EOF
         This is a test file
         EOF
         echo "[DEFAULT]                                                               
         host = ${{ secrets.DBX_H }}
         token = ${{ steps.access_token.outputs.access_token }}" > ~/.databricks.cfg
-        ls 
+        echo 'after..'
+        ls -ltrh
         pwd
     - name: List Files on DBFS
       env:
