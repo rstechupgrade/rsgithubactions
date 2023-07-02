@@ -27,13 +27,7 @@ jobs:
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         
-    - name: Generate Access Token
-      id: access_token
-      run: |
-        access_token=$(az account get-access-token --resource=${{ secrets.SPN_RESOURCE }} --query 'accessToken' -o tsv)
 
-    - name: Log out from Azure
-      run: az logout
         
     - name: Install Databricks CLI
       run: |
