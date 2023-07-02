@@ -25,7 +25,7 @@ jobs:
     - name: List files in cwd
       run: |
         cat > ./test.py << EOF
-        This is a test file
+        This is a test fileA
         EOF
         ls 
         pwd
@@ -36,5 +36,5 @@ jobs:
           DATABRICKS_TOKEN: ${{ secrets.DBX }}
       run: |
         databricks fs ls dbfs:/tmp/
-        databricks fs cp --recursive ./test.py dbfs:/tmp/
+        databricks fs cp --recursive ./test.py dbfs:/tmp/ --o
     
