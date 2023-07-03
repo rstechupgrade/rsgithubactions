@@ -48,8 +48,8 @@ jobs:
 
     - name: List Files on DBFS
       run: |
-        export DATABRICKS_HOST: ${{ secrets.DBX_H }}
-        export DATABRICKS_TOKEN: $(az account get-access-token --resource=${{ secrets.RESOURCE_ID }} --query 'accessToken' -o tsv)
+        export DATABRICKS_HOST=${{ secrets.DBX_H }}
+        export DATABRICKS_TOKEN=$(az account get-access-token --resource=${{ secrets.RESOURCE_ID }} --query 'accessToken' -o tsv)
         databricks fs ls dbfs:/tmp/
         databricks fs cp --recursive ./test_11.py dbfs:/tmp/
     
