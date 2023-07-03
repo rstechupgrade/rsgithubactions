@@ -32,15 +32,13 @@ jobs:
       run: |
         access_token=$(az account get-access-token --resource=${{ secrets.RESOURCE_ID }} --query 'accessToken' -o tsv)
         
-
     - name: Install Databricks CLI
       run: |
         pip install databricks-cli
-        
-        
+      
     - name: List files in cwd
       run: |
-        cat > ./test_11.py << EOF
+        cat > ./test_12.py << EOF
         This is a test fileA
         EOF
         ls 
@@ -51,5 +49,5 @@ jobs:
         export DATABRICKS_HOST=${{ secrets.DBX_H }}
         export DATABRICKS_TOKEN=$(az account get-access-token --resource=${{ secrets.RESOURCE_ID }} --query 'accessToken' -o tsv)
         databricks fs ls dbfs:/tmp/
-        databricks fs cp --recursive ./test_11.py dbfs:/tmp/
+        databricks fs cp --recursive ./test_12.py dbfs:/tmp/
     
