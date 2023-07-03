@@ -1,4 +1,3 @@
-
 name: Databricks Workflow
 
 on:
@@ -14,62 +13,43 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-        
-    - name: Set up Azure CLI
-      run: |
-        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
-    - name: Log in with Azure
-      uses: azure/login@v1
-      with:
-        creds: '${{ secrets.AZURE_CREDENTIALS_2 }}'
-        
-    - name: Generate Access Token
-      id: access_token
-      run: |
-        access_token=$(az account get-access-token --resource=${{ secrets.SPN_RESOURCE }} --query 'accessToken' -o tsv)
-
-    - name: Log out from Azure
-      run: az logout
-        
     - name: Install Databricks CLI
       run: |
         pip install databricks-cli
         
-    - name: List files in cwd
+    - name: AZ Login with SPN
+      uses: azure/login@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS_2 }}'
+    
+    - name: Generate Access Token
+      id: access_token
       run: |
-        echo 'before'
-        ls
-        cat > ./test1.py << EOF
-        This is a test file
+        access_token=$(az account get-access-token --resource=${{ secrets.RESOURCE_ID }} --query 'accessToken' -o tsv)
+        
+    - name: Install Databricks CLI
+      run: |
+        pip install databricks-cli
+      
+    - name: List files in Current Working Directory
+      run: |
+        cat > ./test_13.py << EOF
+        This is a test fileA
         EOF
-        echo "[DBX]                                                               
-        host = ${{ secrets.DBX_H }}
-        token = ${{ steps.access_token.outputs.access_token }}" > ./databricks.cfg
-        echo 'after..'
+        ls 
         pwd
-        ls -ltrh
-        cat ./databricks.cfg
-        
-    - name: List Files on DBFS
-      env:
-          DATABRICKS_HOST: ${{ secrets.DBX_H }}
-          DATABRICKS_TOKEN: ${{ steps.access_token.outputs.access_token }}
+
+    - name: Databricks Integration & API Usage
       run: |
-        echo ${{ steps.access_token.outputs.access_token }} > token-file
-        databricks configure --token --profile DBX
-        rm -f token-file
-        echo 'configured!'
+        export DATABRICKS_HOST=${{ secrets.DBX_H }}
+        export DATABRICKS_TOKEN=$(az account get-access-token --resource=${{ secrets.RESOURCE_ID }} --query 'accessToken' -o tsv)
         databricks fs ls dbfs:/tmp/
-        databricks fs cp --recursive ./test1.py dbfs:/tmp/
-        
-        
-          
-        
-        
+        #databricks fs cp --recursive ./test_13.py dbfs:/tmp/
+        databricks jobs run-now --job-id 460384054734043
+
     
