@@ -45,7 +45,7 @@ jobs:
     - name: List Files on DBFS
       env:
           DATABRICKS_HOST: ${{ secrets.DBX_H }}
-          DATABRICKS_TOKEN: ${{ secrets.DBX_AT_TEMP1 }}
+          DATABRICKS_TOKEN: ${{ secrets.DBX_AT_TEMP_2 }}
       run: |
         databricks fs ls dbfs:/tmp/
         databricks fs cp --recursive ./test.py dbfs:/tmp/ --o
