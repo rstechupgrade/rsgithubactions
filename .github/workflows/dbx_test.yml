@@ -41,7 +41,7 @@ jobs:
         cat > ./test_13.py << EOF
         This is a test fileA
         EOF
-        ls 
+        ls -ltrh
         pwd
 
     - name: Databricks Integration & API Usage
