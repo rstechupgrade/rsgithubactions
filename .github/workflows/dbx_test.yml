@@ -50,8 +50,8 @@ jobs:
         export DATABRICKS_TOKEN=$(az account get-access-token --resource=${{ secrets.RESOURCE_ID }} --query 'accessToken' -o tsv)
         databricks fs ls dbfs:/tmp/
         #databricks fs cp --recursive ./test_13.py dbfs:/tmp/
-        databricks workspace import_dir ./steps /Users/suresrah@lab.morganstanley.com/rahul_test_2/check_out/
-        databricks fs cp ./config  --recursive dbfs:/tmp/
+        #databricks workspace import_dir ./steps /Users/suresrah@lab.morganstanley.com/rahul_test_2/check_out/
+        #databricks fs cp ./config  --recursive dbfs:/tmp/
         databricks jobs run-now --job-id 460384054734043
 
     
