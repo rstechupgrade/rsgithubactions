@@ -1,7 +1,7 @@
 name: Databricks Workflow
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
